@@ -1,0 +1,21 @@
+Package: tidymeta
+Type: Package
+Title: Tidy and Plot Meta Analyses
+Version: 0.1.0.9000
+Authors@R: person("Malcolm", "Barrett", 
+    email = "malcolmbarrett@gmail.com", 
+    role = c("aut", "cre"))
+Maintainer: Malcolm Barrett <malcolmbarrett@gmail.com>
+Description: Tidy and plot meta-analyses from popular meta-analytic tools in R.
+    Currently supports `metafor`. `tidymeta` makes it easy to work with 
+    meta-analyses in a tidy and consistent manner. In addition to working with 
+    results, `tidymeta` also includes `ggplot2` geoms and common data 
+    visualizations for meta-analyses, such as forest plots, funnel plots, 
+    and influence plots.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
+Imports: 
+    magrittr
