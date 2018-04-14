@@ -33,5 +33,6 @@ Imports:
     scales,
     tidyr,
     patchwork
-Remotes: tidyverse/ggplot2,
-    thomasp85/patchwork
+Remotes: thomasp85/patchwork,
+    tidyverse/ggplot2
+    
