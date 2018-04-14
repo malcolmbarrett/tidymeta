@@ -40,7 +40,7 @@ iud_cxca %>%
   meta_analysis(yi = lnes, sei = selnes, slab = study_name, 
                 exponentiate = TRUE) %>% 
   sub2summary(group) %>% 
-  forest_plot(group = group) +
+  forest_plot(group = group) + 
     scale_x_log()
 #> Warning in bind_rows_(x, .id): binding factor and character vector,
 #> coercing into character vector

@@ -27,7 +27,7 @@ devtools::install_github("malcolmbarrett/tidymeta")
 
 # Example
 
-```{r, dpi=320}
+```{r, dpi=320, fig.height=7}
 library(tidymeta)
 library(dplyr)
 library(ggplot2)
