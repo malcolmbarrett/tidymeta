@@ -23,7 +23,7 @@ library(dplyr)
 library(ggplot2)
 
 iud_cxca %>% 
-  group_by(group) %>% 
+  group_by(group) %>%  
   meta_analysis(yi = lnes, sei = selnes, slab = study_name, 
                 exponentiate = TRUE) %>% 
   sub2summary(group) %>% 
