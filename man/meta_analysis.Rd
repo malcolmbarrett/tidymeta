@@ -19,6 +19,12 @@ meta_analysis(.data, .f = metafor::rma, ..., conf.int = TRUE,
 
 \item{exponentiate}{logical. Should the estimates and (if \code{conf.int} =
 \code{TRUE}) confidence intervals be exponentiated?}
+
+\item{include_studies}{logical. Include indidiual study coefficients?}
+
+\item{bind_data}{logical. Bind original data to output?}
+
+\item{weights}{logical. Include study weights in output?}
 }
 \value{
 a \code{tbl}
@@ -28,5 +34,7 @@ A wrapper for meta-analytic functions that automatically tidies it and adds
 the meta-analysis object to the \code{tbl} in a \code{listcol}.
 }
 \examples{
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name)
 
 }

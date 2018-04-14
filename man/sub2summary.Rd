@@ -2,16 +2,32 @@
 % Please edit documentation in R/quick_plots.R
 \name{sub2summary}
 \alias{sub2summary}
-\title{Title}
+\title{Group summary estimates together}
 \usage{
 sub2summary(x, group, ...)
 }
 \arguments{
-\item{...}{}
+\item{x}{a tidied meta-analysis}
+
+\item{group}{a grouping variable}
+
+\item{...}{additional arguments}
+}
+\value{
+a \code{tbl}
 }
 \description{
-Title
+The default in \code{tidymeta} is to put subgroup estimates in the same group as
+the estimates; \code{sub2summary()} gives them a value of "Overall", which groups
+all summaries together.
 }
 \examples{
+
+library(dplyr)
+
+iud_cxca \%>\%
+  group_by(group) \%>\%
+  meta_analysis(yi = lnes, sei = selnes, slab = study_name) \%>\%
+  sub2summary(group)
 
 }

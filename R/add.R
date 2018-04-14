@@ -1,12 +1,25 @@
-#' Title
+#' Add model values to a table of meta-analysis results
 #'
-#' @param x
-#' @param .meta
+#' `add_weights()` adds study weights to the model. `add_residuals()` and
+#' `add_rstandard()` add residuals. `add_i2()`, `add_h2()`, `add_tau2()`
 #'
-#' @return
+#' @param x a tidied meta-analysis
+#' @param .meta a meta-analysis object. If not `NULL`, then looks for a `meta`
+#'   column in `x` containing an overall meta-analysis
+#' @param group a grouping variable
+#' @param exponentiate logical. Should the results be exponentiated?
+#'
+#' @return a `tbl`
 #' @export
 #'
 #' @examples
+#'
+#' library(dplyr)
+#'
+#' iud_cxca %>%
+#'   group_by(group) %>%
+#'   meta_analysis(, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   add_i2()
 #'
 #' @rdname add
 #' @name add
@@ -19,6 +32,7 @@ add_weights <- function(x, .meta = NULL, group = NULL) {
     weights() %>%
     tibble::enframe("study", "weight") %>%
     dplyr::left_join(x, ., by = "study")
+
   if (!rlang::quo_is_null(.group)) {
     x <- x %>%
       dplyr::group_by(!!.group) %>%

@@ -1,18 +1,29 @@
-#' Title
+#' Sensitivity analyses of meta-analysis results
+#'
+#' Conduct leave-one-out or group-wise sensitivity analyses of meta-analysis
+#' results.
 #'
 #' @param x a `tbl` produced by [meta_analysis()] or by [broom::tidy()]
 #' @param type type of sensitvity analysis.
-#' @param prefix
-#' @param conf.int
-#' @param exponentiate
-#' @param glance
-#' @param .f
-#' @param ...
+#' @param prefix the prefix for the model result variables, e.g. estimate.
+#' @param conf.int logical. Should confidence intervals be included? Default is
+#'   `TRUE`.
+#' @param exponentiate logical. Should results be exponentiated? Default is
+#'   `FALSE`.
+#' @param glance logical. Should sensitivity model fit statistics be included?
+#'   Default is `FALSE`.
+#' @param .f a function for sensitivity analysis. Default is
+#'   [metafor::leave1out]
+#' @param ... additional arguments
 #'
-#' @return
+#' @return a `tbl`
 #' @export
 #'
 #' @examples
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   sensitivity()
+#'
 sensitivity <- function(x, type = "leave1out", prefix = "l1o_",
                         conf.int = TRUE, exponentiate = FALSE, glance = FALSE,
                         .f = metafor::leave1out, ...) {
@@ -57,22 +68,35 @@ sensitivity <- function(x, type = "leave1out", prefix = "l1o_",
   }
 }
 
-#' Title
+#' Cumulative sensitivity analyses of meta-analysis results
 #'
-#' @param x
-#' @param prefix
-#' @param conf.int
-#' @param exponentiate
-#' @param glance
-#' @param .f
-#' @param ...
+#' Conduct cumulative sensitivity analyses of meta-analysis results by adding
+#' studies in one at a time. `cumulative` works well with [dplyr::arrange()].
 #'
-#' @return
+#' @param x a `tbl` produced by [meta_analysis()] or by [broom::tidy()]
+#' @param prefix the prefix for the model result variables, e.g. estimate.
+#' @param conf.int logical. Should confidence intervals be included? Default is
+#'   `TRUE`.
+#' @param exponentiate logical. Should results be exponentiated? Default is
+#'   `FALSE`.
+#' @param glance logical. Should sensitivity model fit statistics be included?
+#'   Default is `FALSE`.
+#' @param .f a function for sensitivity analysis. Default is [metafor::cumul]
+#' @param ... additional arguments
+#'
+#' @return a `tbl`
 #' @export
 #'
 #' @examples
+#'
+#' library(dplyr)
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   arrange(desc(weight)) %>%
+#'   cumulative()
+#'
 cumulative <- function(x, prefix = "cumul_",
-                        conf.int = FALSE, exponentiate = FALSE, glance = FALSE,
+                        conf.int = TRUE, exponentiate = FALSE, glance = FALSE,
                         .f = metafor::cumul, ...) {
   .ma <- pull_meta(x)
   key_df <- data.frame(study = as.character(.ma$slab),
@@ -114,5 +138,6 @@ cumulative <- function(x, prefix = "cumul_",
   names(ma_data) <- paste0(prefix, names(ma_data))
 
   dplyr::bind_rows(cumul_df, ma_data) %>%
-    dplyr::left_join(x, ., by = c("study" = paste0(prefix, "study")))
+    dplyr::left_join(x, ., by = c("study" = paste0(prefix, "study"))) %>%
+    dplyr::arrange(type)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy.R
 \name{tidy.rma.uni}
 \alias{tidy.rma.uni}
-\title{Tidy meta-analyis object}
+\title{Tidying methods for meta-analyis objects}
 \usage{
 tidy.rma.uni(x, conf.int = TRUE, exponentiate = FALSE,
   include_studies = TRUE, measure = "GEN", ...)
@@ -19,11 +19,20 @@ tidy.rma.uni(x, conf.int = TRUE, exponentiate = FALSE,
 \item{include_studies}{logical. Should individual studies be included in the
 output?}
 
+\item{measure}{measure type. See \code{\link[metafor:rma]{metafor::rma()}}}
+
 \item{...}{additional arguments}
 }
 \value{
 a \code{data.frame}
 }
 \description{
-Tidy meta-analyis object
+These methods tidy the results of meta-analysis objects
+}
+\examples{
+library(broom)
+library(metafor)
+rma(yi = lnes, sei = selnes, slab = study_name, data = iud_cxca) \%>\%
+  tidy()
+
 }

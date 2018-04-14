@@ -25,10 +25,19 @@ You can install the development version of tidymeta from GitHub with:
 devtools::install_github("malcolmbarrett/tidymeta")
 ```
 
-## Example
+# Example
 
-This is a basic example which shows you how to solve a common problem:
+```{r, dpi=320}
+library(tidymeta)
+library(dplyr)
+library(ggplot2)
 
-```{r example}
-## basic example code
+iud_cxca %>% 
+  group_by(group) %>% 
+  meta_analysis(yi = lnes, sei = selnes, slab = study_name, 
+                exponentiate = TRUE) %>% 
+  sub2summary(group) %>% 
+  forest_plot(group = group) +
+    scale_x_log()
 ```
+

@@ -15,3 +15,8 @@ an object created by a meta-analysis
 \description{
 Pull the meta-analysis object
 }
+\examples{
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  pull_meta()
+}

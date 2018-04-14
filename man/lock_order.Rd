@@ -2,13 +2,29 @@
 % Please edit documentation in R/quick_plots.R
 \name{lock_order}
 \alias{lock_order}
-\title{Title}
+\title{Lock the order of the data in the plot}
 \usage{
-lock_order(study, rev = TRUE)
+lock_order(var, rev = TRUE)
 }
 \arguments{
-\item{study}{}
+\item{var}{a variable to lock}
+
+\item{rev}{logical. Should the order be reversed to make it appear on the
+plot as in the data? Default is \code{TRUE}.}
+}
+\value{
+a factor
 }
 \description{
-Title
+\code{lock_order()} locks the order of the of an axis variable exactly as it
+appears in the data, rather than from the bottom up (for factors and
+numerics) or in alphabetical order (for characters).
+}
+\examples{
+
+library(ggplot2)
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  ggplot(aes(x = estimate, y = lock_order(study))) +
+  geom_point()
 }

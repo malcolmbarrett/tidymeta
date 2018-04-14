@@ -2,14 +2,37 @@
 % Please edit documentation in R/text_table.R
 \name{text_table}
 \alias{text_table}
-\title{Title}
+\title{Quickly produce text tables to accompany forest plots.}
 \usage{
-text_table(.data, study = study, ..., group = NULL, show_y_facets = TRUE,
+text_table(.data, ..., study = study, group = NULL, show_y_facets = TRUE,
   show_y_axis = TRUE, show_grid = FALSE, size = 3.75)
 }
 \arguments{
-\item{facets}{}
+\item{.data}{a \code{data.frame}}
+
+\item{...}{bare variable names to include in the table}
+
+\item{study}{name of study variable}
+
+\item{group}{a grouping variable}
+
+\item{show_y_facets}{logical. Should y-axis facets be included if grouped?}
+
+\item{show_y_axis}{logical. Should study names be included on y-axis?}
+
+\item{show_grid}{logical. Show grid lines?}
+
+\item{size}{text size}
+}
+\value{
+a \code{ggplot2} object
 }
 \description{
-Title
+Quickly produce text tables to accompany forest plots.
+}
+\examples{
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  text_table(weight)
+
 }

@@ -1,14 +1,25 @@
-
 #' Add a meta-analysis to a tbl
+#'
+#' `add_meta()` add a meta-analysis object to a tidied meta-analysis.
 #'
 #' @param x a `data.frame` produced by `tidy()`
 #' @param meta a meta-analysis object (e.g. `rma.uni`)
 #' @param ... additional arguments to `as.tbl`
 #'
-#' @return a `tbl`
+#' @return a `tbl` with a `listcol`, `meta`, containing the meta-analysis
 #' @export
 #'
 #' @examples
+#'
+#' library(metafor)
+#' library(broom)
+#'
+#' ma <- rma(yi = lnes, sei = selnes, slab = study_name, data = iud_cxca)
+#'
+#' ma %>%
+#'   tidy() %>%
+#'   add_meta(ma)
+#'
 add_meta <- function(x, meta, ...) {
   dplyr::as.tbl(x, ...) %>%
     dplyr::mutate(meta = list(meta),
@@ -27,12 +38,17 @@ add_meta <- function(x, meta, ...) {
 #' @param conf.int logical. Include confidence intervals?
 #' @param exponentiate logical. Should the estimates and (if `conf.int` =
 #'   `TRUE`) confidence intervals be exponentiated?
+#' @param include_studies logical. Include indidiual study coefficients?
+#' @param bind_data logical. Bind original data to output?
+#' @param weights logical. Include study weights in output?
 #'
 #' @return a `tbl`
 #'
 #' @export
 #'
 #' @examples
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name)
 #'
 #' @importFrom rlang !!!
 meta_analysis <- function(.data, .f = metafor::rma, ..., conf.int = TRUE,
@@ -91,6 +107,9 @@ meta_analysis <- function(.data, .f = metafor::rma, ..., conf.int = TRUE,
 #' @export
 #'
 #' @examples
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   pull_meta()
 pull_meta <- function(x) {
   x %>%
     dplyr::filter(study == "Overall", type == "summary") %>%
@@ -101,11 +120,16 @@ pull_meta <- function(x) {
 #' Pull the meta-analysis summary estimate
 #'
 #' @param x a tidied meta-analysis
+#' @param conf.int logical. Include confidence intervals?
 #'
 #' @return an object created by a meta-analysis
 #' @export
 #'
 #' @examples
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   pull_summary()
+#'
 pull_summary <- function(x, conf.int = FALSE) {
   est <- x %>%
     dplyr::filter(study == "Overall", type == "summary") %>%

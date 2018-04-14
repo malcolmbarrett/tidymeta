@@ -2,7 +2,7 @@
 % Please edit documentation in R/influence.R
 \name{sensitivity}
 \alias{sensitivity}
-\title{Title}
+\title{Sensitivity analyses of meta-analysis results}
 \usage{
 sensitivity(x, type = "leave1out", prefix = "l1o_", conf.int = TRUE,
   exponentiate = FALSE, glance = FALSE, .f = metafor::leave1out, ...)
@@ -12,8 +12,32 @@ sensitivity(x, type = "leave1out", prefix = "l1o_", conf.int = TRUE,
 
 \item{type}{type of sensitvity analysis.}
 
-\item{...}{}
+\item{prefix}{the prefix for the model result variables, e.g. estimate.}
+
+\item{conf.int}{logical. Should confidence intervals be included? Default is
+\code{TRUE}.}
+
+\item{exponentiate}{logical. Should results be exponentiated? Default is
+\code{FALSE}.}
+
+\item{glance}{logical. Should sensitivity model fit statistics be included?
+Default is \code{FALSE}.}
+
+\item{.f}{a function for sensitivity analysis. Default is
+\link[metafor:leave1out]{metafor::leave1out}}
+
+\item{...}{additional arguments}
+}
+\value{
+a \code{tbl}
 }
 \description{
-Title
+Conduct leave-one-out or group-wise sensitivity analyses of meta-analysis
+results.
+}
+\examples{
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  sensitivity()
+
 }

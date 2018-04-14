@@ -1,4 +1,6 @@
-#' Tidy meta-analyis object
+#' Tidying methods for meta-analyis objects
+#'
+#' These methods tidy the results of meta-analysis objects
 #'
 #' @param x a meta-analysis object. Currently supports `rma.uni` from the
 #'   `metafor` package.
@@ -8,11 +10,18 @@
 #' @param include_studies logical. Should individual studies be included in the
 #'    output?
 #' @param ... additional arguments
+#' @param measure measure type. See [metafor::rma()]
 #'
 #' @return a `data.frame`
 #' @export
 #'
 #' @examples
+#' library(broom)
+#' library(metafor)
+#' rma(yi = lnes, sei = selnes, slab = study_name, data = iud_cxca) %>%
+#'   tidy()
+#'
+#' @rdname tidiers
 tidy.rma.uni <- function(x, conf.int = TRUE, exponentiate = FALSE,
                          include_studies = TRUE, measure = "GEN", ...) {
   if (!inherits(x, "rma.uni")) stop("`x` must be of class `rma.uni`")

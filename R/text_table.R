@@ -1,14 +1,24 @@
-#' Title
+#' Quickly produce text tables to accompany forest plots.
 #'
-#' @param ...
-#' @param facets
+#' @param .data a `data.frame`
+#' @param ... bare variable names to include in the table
+#' @param study name of study variable
+#' @param group a grouping variable
+#' @param show_y_facets logical. Should y-axis facets be included if grouped?
+#' @param show_y_axis logical. Should study names be included on y-axis?
+#' @param show_grid logical. Show grid lines?
+#' @param size text size
 #'
-#' @return
+#' @return a `ggplot2` object
 #' @export
 #'
 #' @examples
+#'
+#' meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) %>%
+#'   text_table(weight)
+#'
 #' @importFrom rlang !! !!!
-text_table <- function(.data, study = study,  ..., group = NULL,
+text_table <- function(.data, ..., study = study, group = NULL,
                        show_y_facets = TRUE, show_y_axis = TRUE,
                        show_grid = FALSE, size = 3.75) {
 

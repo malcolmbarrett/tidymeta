@@ -9,7 +9,7 @@
 \alias{add_h2}
 \alias{add_tau2}
 \alias{add_blups}
-\title{Title}
+\title{Add model values to a table of meta-analysis results}
 \usage{
 add_weights(x, .meta = NULL, group = NULL)
 
@@ -26,20 +26,29 @@ add_tau2(x, .meta = NULL)
 add_blups(x, .meta = NULL, exponentiate = FALSE)
 }
 \arguments{
-\item{.meta}{}
+\item{x}{a tidied meta-analysis}
+
+\item{.meta}{a meta-analysis object. If not \code{NULL}, then looks for a \code{meta}
+column in \code{x} containing an overall meta-analysis}
+
+\item{group}{a grouping variable}
+
+\item{exponentiate}{logical. Should the results be exponentiated?}
+}
+\value{
+a \code{tbl}
 }
 \description{
-Title
-
-#' @export
-#' @rdname add
-add_predictions <- function(x, .meta = NULL) {
-pull_meta(x) %>%
-predict() %>%
-tibble::enframe("study", "weight") %>%
-dplyr::left_join(x, ., by = "study")
-}
+\code{add_weights()} adds study weights to the model. \code{add_residuals()} and
+\code{add_rstandard()} add residuals. \code{add_i2()}, \code{add_h2()}, \code{add_tau2()}
 }
 \examples{
+
+library(dplyr)
+
+iud_cxca \%>\%
+  group_by(group) \%>\%
+  meta_analysis(, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  add_i2()
 
 }

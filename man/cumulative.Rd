@@ -2,14 +2,42 @@
 % Please edit documentation in R/influence.R
 \name{cumulative}
 \alias{cumulative}
-\title{Title}
+\title{Cumulative sensitivity analyses of meta-analysis results}
 \usage{
-cumulative(x, prefix = "cumul_", conf.int = FALSE, exponentiate = FALSE,
+cumulative(x, prefix = "cumul_", conf.int = TRUE, exponentiate = FALSE,
   glance = FALSE, .f = metafor::cumul, ...)
 }
 \arguments{
-\item{...}{}
+\item{x}{a \code{tbl} produced by \code{\link[=meta_analysis]{meta_analysis()}} or by \code{\link[broom:tidy]{broom::tidy()}}}
+
+\item{prefix}{the prefix for the model result variables, e.g. estimate.}
+
+\item{conf.int}{logical. Should confidence intervals be included? Default is
+\code{TRUE}.}
+
+\item{exponentiate}{logical. Should results be exponentiated? Default is
+\code{FALSE}.}
+
+\item{glance}{logical. Should sensitivity model fit statistics be included?
+Default is \code{FALSE}.}
+
+\item{.f}{a function for sensitivity analysis. Default is \link[metafor:cumul]{metafor::cumul}}
+
+\item{...}{additional arguments}
+}
+\value{
+a \code{tbl}
 }
 \description{
-Title
+Conduct cumulative sensitivity analyses of meta-analysis results by adding
+studies in one at a time. \code{cumulative} works well with \code{\link[dplyr:arrange]{dplyr::arrange()}}.
+}
+\examples{
+
+library(dplyr)
+
+meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name) \%>\%
+  arrange(desc(weight)) \%>\%
+  cumulative()
+
 }

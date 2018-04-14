@@ -5,7 +5,8 @@
 \title{Funnel plot lines}
 \usage{
 geom_funnel(mapping = NULL, data = NULL, ci_level = 0.95,
-  colour = "black", color = NULL, position = "identity", na.rm = FALSE,
+  log_summary = FALSE, colour = "black", color = NULL,
+  position = "identity", na.rm = FALSE,
   summary_label = "Summary\\nEstimate", ci_label = NULL, show.legend = NA,
   inherit.aes = TRUE, ...)
 }
@@ -31,6 +32,10 @@ will be used as the layer data.}
 
 \item{ci_level}{the confidence level desired for the psuedo-CI lines. Between
 0 and 1. Also used for line labels.}
+
+\item{log_summary}{a summary estimate (see \code{\link[=pull_summary]{pull_summary()}})}
+
+\item{color, colour}{line color}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -60,8 +65,18 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 }
 \description{
-Funnel plot lines
+`geom_funnel()`` computes psuedo confidence limits for the summary estimate
+of a meta-analysis to be used in a funnel plot.
 }
 \examples{
+
+library(ggplot2)
+
+ma <- meta_analysis(iud_cxca, yi = lnes, sei = selnes, slab = study_name)
+
+ggplot(ma, aes(x = estimate, y = std.error)) +
+  geom_point() +
+  geom_funnel(aes(summary = pull_summary(ma))) +
+  scale_y_reverse()
 
 }

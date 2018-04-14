@@ -12,6 +12,8 @@ Description: Tidy and plot meta-analyses from meta-analytic tools in R.
     results, `tidymeta` also includes `ggplot2` geoms and common data 
     visualizations for meta-analyses, such as forest plots, funnel plots, 
     and influence plots.
+Depends: 
+    R (>= 2.10)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,6 +24,14 @@ Imports:
     metafor,
     broom,
     dplyr,
-    ggplot2,
+    ggplot2 (>= 2.2.1.9000),
     purrr,
-    forcats
+    forcats,
+    rlang,
+    stringr,
+    tibble,
+    scales,
+    tidyr,
+    patchwork
+Remotes: tidyverse/ggplot2,
+    thomasp85/patchwork

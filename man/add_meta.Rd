@@ -14,8 +14,20 @@ add_meta(x, meta, ...)
 \item{...}{additional arguments to \code{as.tbl}}
 }
 \value{
-a \code{tbl}
+a \code{tbl} with a \code{listcol}, \code{meta}, containing the meta-analysis
 }
 \description{
-Add a meta-analysis to a tbl
+\code{add_meta()} add a meta-analysis object to a tidied meta-analysis.
+}
+\examples{
+
+library(metafor)
+library(broom)
+
+ma <- rma(yi = lnes, sei = selnes, slab = study_name, data = iud_cxca)
+
+ma \%>\%
+  tidy() \%>\%
+  add_meta(ma)
+
 }
