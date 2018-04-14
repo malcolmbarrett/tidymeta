@@ -27,12 +27,12 @@ Imports:
     ggplot2 (>= 2.2.1.9000),
     purrr,
     forcats,
-    rlang,
+    rlang (>= 0.2.0.9001),
     stringr,
     tibble,
     scales,
     tidyr,
     patchwork
 Remotes: thomasp85/patchwork,
-    tidyverse/ggplot2
-    
+    tidyverse/ggplot2,
+    tidyverse/rlang
