@@ -3,9 +3,8 @@
 
 [![Travis build
 status](https://travis-ci.org/malcolmbarrett/tidymeta.svg?branch=master)](https://travis-ci.org/malcolmbarrett/tidymeta)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/malcolmbarrett/tidymeta?branch=master&svg=true)](https://ci.appveyor.com/project/malcolmbarrett/tidymeta)
-\# tidymeta
+
+# tidymeta
 
 Tidy and plot meta-analyses from popular meta-analytic tools in R.
 Currently in early development.
