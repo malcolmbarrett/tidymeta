@@ -10,7 +10,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%",
-  fig.height = 8
+  fig.height = 8,
+  dpi = 320
 )
 #[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/malcolmbarrett/tidymeta?branch=master&svg=true)](https://ci.appveyor.com/project/malcolmbarrett/tidymeta)
 ```

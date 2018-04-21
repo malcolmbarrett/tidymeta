@@ -24,7 +24,7 @@ install_github("malcolmbarrett/mbmisc")
 install_github("tidyverse/ggplot2")
 ```
 
-# Tidy Meta-Analysis
+# Tidy Meta-Analysis 
 
 `tidymeta` is a toolkit for working with meta-analyses in R. Currently,
 it includes a data set, called `iud_cxca`, for a meta-analysis of the
