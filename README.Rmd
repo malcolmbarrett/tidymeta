@@ -9,35 +9,93 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  fig.height = 8
 )
 ```
+
+[![Travis build status](https://travis-ci.org/malcolmbarrett/tidymeta.svg?branch=master)](https://travis-ci.org/malcolmbarrett/tidymeta) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/malcolmbarrett/tidymeta?branch=master&svg=true)](https://ci.appveyor.com/project/malcolmbarrett/tidymeta)
 # tidymeta
 
 Tidy and plot meta-analyses from popular meta-analytic tools in R. Currently in early development.
 
 ## Installation
 
-You can install the development version of tidymeta from GitHub with:
+`tidymeta` requires the development version of several packages, including `ggplot2`, to function correctly. You can install the required packages for this vignette with the following code:
 
-``` {r install, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("malcolmbarrett/tidymeta")
+```{r, eval=FALSE}
+install.packages(c("devtools", "yaml", "ggrepel"))
+library(devtools)
+install_github("r-lib/rlang")
+install_github("malcolmbarrett/tidymeta")
+install_github("malcolmbarrett/mbmisc")
+install_github("tidyverse/ggplot2")
 ```
 
-# Example
+# Tidy Meta-Analysis
 
-```{r, dpi=320, fig.height=8, message = FALSE, warning = FALSE}
+`tidymeta` is a toolkit for working with meta-analyses in R. Currently, it includes a data set, called `iud_cxca`, for a meta-analysis of the relationship between IUD use and cervical cancer. 
+
+```{r, warning = FALSE, message = FALSE}
 library(tidymeta)
-library(dplyr)
 library(ggplot2)
+library(dplyr)
+library(broom)
 
-iud_cxca %>% 
-  group_by(group) %>% 
-  meta_analysis(yi = lnes, sei = selnes, slab = study_name, 
-                exponentiate = TRUE) %>% 
-  sub2summary(group) %>% 
-  forest_plot(group = group) +
-    scale_x_log()
+iud_cxca
 ```
+
+`tidymeta` includes `broom` methods for cleaning meta-analysis results, although it currently only supports the `metafor` package. The `tidy()` function in `broom` puts results into a tidy data frame. 
+
+```{r, message = FALSE}
+library(metafor)
+meta4 <- rma(yi = lnes, sei = selnes, data = iud_cxca)
+tidy(meta4) %>% 
+  as_tibble() # for space
+```
+
+`tidymeta` also includes wrapper functions for working with meta-analysis packages in the context of the tidyverse. The main function for this is `meta_analysis()`, which models and tidies the object, as well as storing the results in the `meta` column to facilitate other analysis. 
+
+```{r}
+#  same as above but stores the meta-analysis object
+iud_cxca %>% 
+  meta_analysis(yi = lnes, sei = selnes, slab = study_name)
+```
+
+`tidymeta` doesn't actually do meta-analysis; it unifies existing tools with the tidyverse. The benefit of this approach is that you can do meta-analyses with tidy tools in mind. For example, if you want to conduct a sub-group analysis, you can use the `group_by()` function from `dplyr`. Here, `group` is a variable with information about study design.
+
+```{r}
+ma <- iud_cxca %>% 
+  group_by(group) %>% 
+  meta_analysis(yi = lnes, sei = selnes, slab = study_name, exponentiate = TRUE)
+
+ma
+```
+
+You can also do sensitivy analyses and cumulative analyses with `sensitivity()` and `cumulative()`.
+
+# Visualization for Meta-Analysis
+
+`tidymeta` includes functionality for working with results in `ggplot2`, including meta-analysis specific geoms (such as `geom_funnel()`) and quick plots for common visualizations.
+
+With tidy data, most data visualizations for meta-analyses are easy to build from the ground up. Nevertheless, `tidymeta` has several quick plot functions to make the process easier. `forest_plot()` takes a tidied meta-analysis and plots the effect sizes.
+
+```{r}
+fp <- ma %>% 
+  forest_plot(group = group)
+
+fp
+```
+
+Because the results are still `ggplot2` objects, it's easy to make changes to the plot to your liking.
+
+```{r}
+fp <- fp + 
+  scale_x_log() + 
+  theme(axis.text.y = element_text(face = c("bold", rep("plain", 21))))
+
+fp
+```
+
+`tidymeta` currently supports forest plots, funnel plots, influence plots, and cumulative plots.
 

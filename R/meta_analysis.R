@@ -59,6 +59,7 @@ meta_analysis <- function(.data, .f = metafor::rma, ..., conf.int = TRUE,
 
   if (dplyr::is_grouped_df(.data)) {
     group_var <- dplyr::group_vars(.data)
+    group_is_factor <- is.factor(.data[[group_var]])
     .subgroup <- .data %>%
        tidyr::nest() %>%
        dplyr::mutate(meta = purrr::map(data,
@@ -78,8 +79,16 @@ meta_analysis <- function(.data, .f = metafor::rma, ..., conf.int = TRUE,
        meta_analysis(.f = .f, ..., conf.int = conf.int,
                    exponentiate = exponentiate, bind_data = bind_data,
                    include_studies = FALSE, weights = FALSE) %>%
-       dplyr::mutate(!!group_var := "Summary") %>%
-       dplyr::bind_rows(.subgroup, .)
+       dplyr::mutate(!!group_var := "Summary")
+    if (group_is_factor) {
+      fct_subgroup <- .subgroup[[group_var]]
+      fct_overall <- .meta_data[[group_var]]
+      unified <- forcats::fct_unify(list(fct_subgroup, as.factor(fct_overall)))
+      .subgroup[[group_var]] <- unified[[1]]
+      .meta_data[[group_var]] <- unified[[2]]
+    }
+
+    .meta_data <- dplyr::bind_rows(.subgroup, .meta_data)
 
     if (weights) .meta_data <- add_weights(.meta_data, group = !!rlang::sym(group_var))
 

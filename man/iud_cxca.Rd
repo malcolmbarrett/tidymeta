@@ -17,7 +17,7 @@ cancer: a systematic review and meta-analysis.” Obstetrics and Gynecology:
 iud_cxca
 }
 \description{
-This is data from a meta-analysis of the effect of IUD use on cervical
-cancer. Estimates are odds ratios for ever-use of IUD.
+This is data from a meta-analysis of the effect of Intrauterine Device use on
+cervical cancer. Estimates are odds ratios for ever-use of IUD.
 }
 \keyword{datasets}

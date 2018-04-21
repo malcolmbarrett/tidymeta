@@ -3,8 +3,8 @@ NULL
 
 #' Meta-analysis of IUD and cervical cancer
 #'
-#' This is data from a meta-analysis of the effect of IUD use on cervical
-#' cancer. Estimates are odds ratios for ever-use of IUD.
+#' This is data from a meta-analysis of the effect of Intrauterine Device use on
+#' cervical cancer. Estimates are odds ratios for ever-use of IUD.
 #'
 #' @format A `tbl` with variables about both study esimates and study methods,
 #'   including variables controlled, study design, and publication year.

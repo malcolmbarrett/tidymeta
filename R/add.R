@@ -27,11 +27,12 @@
 #' @importFrom rlang !!
 add_weights <- function(x, .meta = NULL, group = NULL) {
   .group <- rlang::enquo(group)
-
-  x <- pull_meta(x) %>%
+  wts <- pull_meta(x) %>%
     weights() %>%
-    tibble::enframe("study", "weight") %>%
-    dplyr::left_join(x, ., by = "study")
+    tibble::enframe("study", "weight")
+  attributes(wts$study) <- NULL
+  x <- dplyr::left_join(x, wts, by = "study")
+
 
   if (!rlang::quo_is_null(.group)) {
     x <- x %>%

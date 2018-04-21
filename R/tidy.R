@@ -51,5 +51,7 @@ tidy.rma.uni <- function(x, conf.int = TRUE, exponentiate = FALSE,
     .data <- .data[-which(names(.data) %in% c("conf.low", "conf.high"))]
   }
 
+  attributes(.data$study) <- NULL
+
   .data
 }
