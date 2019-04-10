@@ -32,7 +32,10 @@ Imports:
     tibble,
     scales,
     tidyr,
-    patchwork
-Remotes: thomasp85/patchwork,
+    patchwork,
+    mbmisc (>= 0.0.0.9000)
+Remotes:  
+    thomasp85/patchwork,
     tidyverse/ggplot2,
-    tidyverse/rlang
+    tidyverse/rlang,
+    malcolmbarrett/mbmisc
